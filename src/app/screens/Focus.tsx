@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useApp } from '../context/AppContext';
-import { Button } from '../components/ui/button';
-import { Label } from '../components/ui/label';
-import { Progress } from '../components/ui/progress';
+import { useState, useEffect } from "react";
+import { useApp } from "../context/AppContext";
+import { Button } from "../components/ui/button";
+import { Label } from "../components/ui/label";
+import { Progress } from "../components/ui/progress";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../components/ui/select';
-import { Checkbox } from '../components/ui/checkbox';
-import { Timer, Pause, Play, Square, Plus, Music, Wind } from 'lucide-react';
+} from "../components/ui/select";
+import { Checkbox } from "../components/ui/checkbox";
+import { Timer, Pause, Play, Square, Plus, Music, Wind } from "lucide-react";
 
 export function Focus() {
   const { tasks, modules, addFocusSession, completeFocusSession, addXP } =
     useApp();
-  const [selectedTaskId, setSelectedTaskId] = useState('');
-  const [sessionType, setSessionType] = useState<'deep' | 'pomodoro' | 'study'>(
-    'pomodoro'
+  const [selectedTaskId, setSelectedTaskId] = useState("");
+  const [sessionType, setSessionType] = useState<"deep" | "pomodoro" | "study">(
+    "pomodoro",
   );
   const [duration, setDuration] = useState(25);
   const [environment, setEnvironment] = useState<string[]>([]);
@@ -57,9 +57,9 @@ export function Focus() {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs
+    return `${mins.toString().padStart(2, "0")}:${secs
       .toString()
-      .padStart(2, '0')}`;
+      .padStart(2, "0")}`;
   };
 
   const handleStartSession = () => {
@@ -249,7 +249,9 @@ export function Focus() {
 
           <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
             <Progress value={progress} className="h-2 mb-3" />
-            <p className="text-white/80 text-sm">{Math.round(progress)}% complete</p>
+            <p className="text-white/80 text-sm">
+              {Math.round(progress)}% complete
+            </p>
           </div>
 
           <p className="text-white/60 text-sm">
@@ -267,7 +269,7 @@ export function Focus() {
                 <Pause className="w-6 h-6 text-white" />
               )}
               <span className="text-white text-sm">
-                {isPaused ? 'Resume' : 'Pause'}
+                {isPaused ? "Resume" : "Pause"}
               </span>
             </button>
             <button
@@ -290,12 +292,12 @@ export function Focus() {
             <div className="flex items-center justify-center gap-2 text-white/70 text-sm">
               <Music className="w-4 h-4" />
               <span>
-                Now playing:{' '}
-                {environment.includes('lofi')
-                  ? 'Lo-Fi Study Beats'
-                  : environment.includes('white')
-                  ? 'White Noise'
-                  : 'Nature Sounds'}
+                Now playing:{" "}
+                {environment.includes("lofi")
+                  ? "Lo-Fi Study Beats"
+                  : environment.includes("white")
+                    ? "White Noise"
+                    : "Nature Sounds"}
               </span>
             </div>
           )}
@@ -329,7 +331,7 @@ export function Focus() {
             </SelectTrigger>
             <SelectContent>
               {tasks
-                .filter((task) => task.status !== 'completed')
+                .filter((task) => task.status !== "completed")
                 .map((task) => {
                   const module = modules.find((m) => m.id === task.moduleId);
                   return (
@@ -343,22 +345,22 @@ export function Focus() {
         </div>
 
         <div>
-          <Label className="text-base mb-3 block">Session Type:</Label>
-          <div className="grid grid-cols-3 gap-3">
+          <Label className="text-base mb-3 block ">Session Type:</Label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {[
-              { value: 'deep', label: 'Deep Focus' },
-              { value: 'pomodoro', label: 'Pomodoro' },
-              { value: 'study', label: 'Study with Me' },
+              { value: "deep", label: "Deep Focus" },
+              { value: "pomodoro", label: "Pomodoro" },
+              { value: "study", label: "Study with Me" },
             ].map((type) => (
               <button
                 key={type.value}
                 onClick={() =>
-                  setSessionType(type.value as 'deep' | 'pomodoro' | 'study')
+                  setSessionType(type.value as "deep" | "pomodoro" | "study")
                 }
-                className={`p-3 rounded-lg border-2 transition-all ${
+                className={`p-3 rounded-lg border-2 transition-all text-center break-words ${
                   sessionType === type.value
-                    ? 'border-[#1E3E5F] bg-[#1E3E5F]/5'
-                    : 'border-border hover:border-[#1E3E5F]/30'
+                    ? "border-[#1E3E5F] bg-[#1E3E5F]/5"
+                    : "border-border hover:border-[#1E3E5F]/30"
                 }`}
               >
                 {type.label}
@@ -369,26 +371,27 @@ export function Focus() {
 
         <div>
           <Label className="text-base mb-3 block">Duration:</Label>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[25, 50, 90].map((mins) => (
               <button
                 key={mins}
                 onClick={() => setDuration(mins)}
-                className={`p-3 rounded-lg border-2 transition-all ${
+                className={`p-3 rounded-lg border-2 transition-all text-center break-words ${
                   duration === mins
-                    ? 'border-[#1E3E5F] bg-[#1E3E5F]/5'
-                    : 'border-border hover:border-[#1E3E5F]/30'
+                    ? "border-[#1E3E5F] bg-[#1E3E5F]/5"
+                    : "border-border hover:border-[#1E3E5F]/30"
                 }`}
               >
                 {mins} min
               </button>
             ))}
+
             <button
               onClick={() => {
-                const custom = prompt('Enter duration in minutes:', '60');
+                const custom = prompt("Enter duration in minutes:", "60");
                 if (custom) setDuration(parseInt(custom));
               }}
-              className={`p-3 rounded-lg border-2 border-border hover:border-[#1E3E5F]/30 transition-all`}
+              className="p-3 rounded-lg border-2 border-border hover:border-[#1E3E5F]/30 transition-all text-center break-words"
             >
               Custom
             </button>
@@ -399,10 +402,10 @@ export function Focus() {
           <Label className="text-base mb-3 block">Environment:</Label>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { id: 'lofi', label: 'Lo-Fi Music', icon: Music },
-              { id: 'white', label: 'White Noise', icon: Wind },
-              { id: 'nature', label: 'Nature', icon: Wind },
-              { id: 'none', label: 'No Sound', icon: Square },
+              { id: "lofi", label: "Lo-Fi Music", icon: Music },
+              { id: "white", label: "White Noise", icon: Wind },
+              { id: "nature", label: "Nature", icon: Wind },
+              { id: "none", label: "No Sound", icon: Square },
             ].map((env) => {
               const Icon = env.icon;
               return (
@@ -411,8 +414,8 @@ export function Focus() {
                   onClick={() => toggleEnvironment(env.id)}
                   className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${
                     environment.includes(env.id)
-                      ? 'border-[#1E3E5F] bg-[#1E3E5F]/5'
-                      : 'border-border hover:border-[#1E3E5F]/30'
+                      ? "border-[#1E3E5F] bg-[#1E3E5F]/5"
+                      : "border-border hover:border-[#1E3E5F]/30"
                   }`}
                 >
                   <Icon className="w-4 h-4" />

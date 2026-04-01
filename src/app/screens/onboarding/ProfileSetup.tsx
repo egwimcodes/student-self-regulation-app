@@ -103,25 +103,37 @@ export function ProfileSetup() {
             </Label>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { value: 'undergraduate', label: 'Undergraduate', sub: 'Year 1-4' },
-                { value: 'postgraduate', label: 'Postgraduate', sub: 'Masters' },
-                { value: 'phd', label: 'PhD/Research', sub: 'Doctoral' },
+                {
+                  value: "undergraduate",
+                  label: "Undergraduate",
+                  sub: "Year 1-4",
+                },
+                {
+                  value: "postgraduate",
+                  label: "Postgraduate",
+                  sub: "Masters",
+                },
+                { value: "phd", label: "PhD/Research", sub: "Doctoral" },
               ].map((option) => (
                 <button
                   key={option.value}
                   onClick={() =>
                     setAcademicLevel(
-                      option.value as 'undergraduate' | 'postgraduate' | 'phd'
+                      option.value as "undergraduate" | "postgraduate" | "phd",
                     )
                   }
                   className={`p-4 rounded-xl border-2 transition-all ${
                     academicLevel === option.value
-                      ? 'border-[#1E3E5F] bg-[#1E3E5F]/5'
-                      : 'border-border hover:border-[#1E3E5F]/30'
+                      ? "border-[#1E3E5F] bg-[#1E3E5F]/5"
+                      : "border-border hover:border-[#1E3E5F]/30"
                   }`}
                 >
-                  <div className="font-semibold">{option.label}</div>
-                  <div className="text-sm text-muted-foreground">{option.sub}</div>
+                  <div className="font-semibold text-sm md:text-bas truncate">
+                    {option.label}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {option.sub}
+                  </div>
                 </button>
               ))}
             </div>
@@ -145,7 +157,7 @@ export function ProfileSetup() {
                     placeholder="Course Name"
                     value={module.name}
                     onChange={(e) =>
-                      updateModule(module.id, 'name', e.target.value)
+                      updateModule(module.id, "name", e.target.value)
                     }
                     className="flex-1"
                   />
@@ -153,7 +165,7 @@ export function ProfileSetup() {
                     placeholder="Code"
                     value={module.code}
                     onChange={(e) =>
-                      updateModule(module.id, 'code', e.target.value)
+                      updateModule(module.id, "code", e.target.value)
                     }
                     className="w-32"
                   />
@@ -188,8 +200,8 @@ export function ProfileSetup() {
                   onClick={() => setPrimaryGoal(goal.text)}
                   className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 ${
                     primaryGoal === goal.text
-                      ? 'border-[#1E3E5F] bg-[#1E3E5F]/5'
-                      : 'border-border hover:border-[#1E3E5F]/30'
+                      ? "border-[#1E3E5F] bg-[#1E3E5F]/5"
+                      : "border-border hover:border-[#1E3E5F]/30"
                   }`}
                 >
                   <span className="text-2xl">{goal.icon}</span>

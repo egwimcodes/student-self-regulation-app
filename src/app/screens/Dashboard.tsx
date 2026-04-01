@@ -98,7 +98,7 @@ export function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">TODAY'S PRIORITY</h2>
             <button
-              onClick={() => navigate('/focus')}
+              onClick={() => navigate("/focus")}
               className="px-4 py-2 bg-white/20 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors"
             >
               Focus Mode
@@ -109,8 +109,8 @@ export function Dashboard() {
             <div>
               <h3 className="text-xl font-bold mb-1">{primaryTask.title}</h3>
               <p className="text-white/80 text-sm">
-                {getModuleById(primaryTask.moduleId)?.code} • Due{' '}
-                {format(new Date(primaryTask.dueDate), 'MMMM d')} • 85% of class
+                {getModuleById(primaryTask.moduleId)?.code} • Due{" "}
+                {format(new Date(primaryTask.dueDate), "MMMM d")} • 85% of class
                 has done
               </p>
             </div>
@@ -130,27 +130,27 @@ export function Dashboard() {
                     key={subtask.id}
                     className={`px-2 py-1 rounded ${
                       subtask.completed
-                        ? 'bg-[#2D6A4F] text-white'
-                        : 'bg-white/20'
+                        ? "bg-[#2D6A4F] text-white"
+                        : "bg-white/20"
                     }`}
                   >
-                    {subtask.completed ? '✓' : '○'} {subtask.title}
+                    {subtask.completed ? "✓" : "○"} {subtask.title}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               <Button
-                onClick={() => navigate('/focus')}
+                onClick={() => navigate("/focus")}
                 className="flex-1 bg-white text-[#1E3E5F] hover:bg-white/90"
               >
                 Start Focus Session
               </Button>
               <Button
-                onClick={() => navigate('/tasks')}
+                onClick={() => navigate("/tasks")}
                 variant="outline"
-                className="flex-1 border-white/30 text-white hover:bg-white/10"
+                className="flex-1 border-white/30 text-[#1E3E5F] hover:bg-white/10"
               >
                 Break Down Task
               </Button>
@@ -159,8 +159,8 @@ export function Dashboard() {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-card rounded-xl p-4 border border-border">
+      <div className="flex gap-4 overflow-x-auto pb-2">
+        <div className="min-w-[250px] flex-shrink-0 bg-card rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-3">
             <Flame className="w-5 h-5 text-[#E76F51]" />
             <span className="text-sm font-medium text-muted-foreground">
@@ -174,7 +174,7 @@ export function Dashboard() {
           <p className="text-xs text-muted-foreground mt-1">Best: 47 days</p>
         </div>
 
-        <div className="bg-card rounded-xl p-4 border border-border">
+        <div className="min-w-[250px] flex-shrink-0 bg-card rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-3">
             <Clock className="w-5 h-5 text-[#1E3E5F]" />
             <span className="text-sm font-medium text-muted-foreground">
@@ -188,7 +188,7 @@ export function Dashboard() {
           <p className="text-xs text-muted-foreground mt-1">Goal: 20 hrs</p>
         </div>
 
-        <div className="bg-card rounded-xl p-4 border border-border">
+        <div className="min-w-[250px] flex-shrink-0 bg-card rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-3">
             <CheckCircle2 className="w-5 h-5 text-[#2D6A4F]" />
             <span className="text-sm font-medium text-muted-foreground">
@@ -214,17 +214,16 @@ export function Dashboard() {
         <div className="space-y-3">
           {upcomingTasks.map((task) => {
             const module = getModuleById(task.moduleId);
-            const isUrgent = differenceInHours(new Date(task.dueDate), new Date()) < 24;
+            const isUrgent =
+              differenceInHours(new Date(task.dueDate), new Date()) < 24;
 
             return (
               <div
                 key={task.id}
                 className={`bg-card rounded-xl p-4 border transition-all hover:shadow-md cursor-pointer ${
-                  isUrgent
-                    ? 'border-[#E76F51] bg-[#E76F51]/5'
-                    : 'border-border'
+                  isUrgent ? "border-[#E76F51] bg-[#E76F51]/5" : "border-border"
                 }`}
-                onClick={() => navigate('/tasks')}
+                onClick={() => navigate("/tasks")}
               >
                 {isUrgent && (
                   <div className="flex items-center gap-1 text-[#E76F51] text-xs font-semibold mb-2">
@@ -237,8 +236,8 @@ export function Dashboard() {
                       {task.title}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {module?.code} • Due{' '}
-                      {format(new Date(task.dueDate), 'MMMM d')}
+                      {module?.code} • Due{" "}
+                      {format(new Date(task.dueDate), "MMMM d")}
                     </p>
                   </div>
                   {task.progress > 0 && (
@@ -263,7 +262,7 @@ export function Dashboard() {
                     variant="outline"
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate('/tasks');
+                      navigate("/tasks");
                     }}
                   >
                     Continue
@@ -295,7 +294,7 @@ export function Dashboard() {
             <div
               key={module.id}
               className="bg-card rounded-xl p-4 border border-border min-w-[200px] cursor-pointer hover:shadow-md transition-all"
-              onClick={() => navigate('/analytics')}
+              onClick={() => navigate("/analytics")}
             >
               <div
                 className="w-full h-1 rounded-full mb-3"
@@ -323,7 +322,7 @@ export function Dashboard() {
                 style={{ backgroundColor: module.color }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate('/focus');
+                  navigate("/focus");
                 }}
               >
                 Study
@@ -342,8 +341,8 @@ export function Dashboard() {
             </h3>
             <p className="text-sm text-foreground/80 mb-3">
               Based on your patterns, you focus best between 9-11 AM. You have 2
-              tasks that could be completed in tomorrow's optimal window. Schedule
-              them now?
+              tasks that could be completed in tomorrow's optimal window.
+              Schedule them now?
             </p>
             <div className="flex gap-2">
               <Button size="sm" className="bg-[#9C89B8] hover:bg-[#9C89B8]/90">
@@ -361,7 +360,7 @@ export function Dashboard() {
       </div>
 
       <button
-        onClick={() => navigate('/tasks')}
+        onClick={() => navigate("/tasks")}
         className="fixed bottom-24 right-6 w-14 h-14 bg-[#1E3E5F] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#2C4C6E] transition-all hover:scale-110 z-40"
       >
         <Plus className="w-6 h-6" />

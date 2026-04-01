@@ -31,7 +31,7 @@ export function Achievements() {
           <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             🎮 YOUR PROGRESS
           </h2>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2">
             <Button size="sm" variant="outline">
               View Leaderboard
             </Button>
