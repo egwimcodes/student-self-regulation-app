@@ -62,13 +62,13 @@ export function ValueProposition() {
           <Button
             size="lg"
             className="w-full h-12 bg-white text-[#1E3E5F] hover:bg-white/90 text-base font-semibold"
-            onClick={() => navigate('/onboarding/profile')}
+            onClick={() => navigate("/onboarding/profile")}
           >
             Start Free Trial
           </Button>
           <button
             className="text-white/80 text-sm hover:text-white"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/onboarding/profile")}
           >
             Already have an account? Sign In
           </button>
