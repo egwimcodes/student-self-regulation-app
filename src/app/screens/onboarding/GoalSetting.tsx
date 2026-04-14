@@ -41,7 +41,7 @@ export function GoalSetting() {
       id: Date.now().toString(),
       title: goalTitle,
       moduleId: '1',
-      dueDate: new Date(endDate),
+      dueDate: new Date(endDate).toISOString(),
       priority: 'high',
       status: 'pending',
       progress: 0,

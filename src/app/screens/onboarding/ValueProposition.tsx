@@ -1,9 +1,17 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Button } from '../../components/ui/button';
 import { BarChart3, Target, Bell, Timer } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
 
 export function ValueProposition() {
   const navigate = useNavigate();
+  const { isAuthenticated, onboardingCompleted } = useApp();
+
+  useEffect(() => {
+    if (isAuthenticated && onboardingCompleted) navigate('/');
+    else if (isAuthenticated) navigate('/onboarding/profile');
+  }, [isAuthenticated, onboardingCompleted, navigate]);
 
   const features = [
     {

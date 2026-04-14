@@ -26,13 +26,17 @@ export function Dashboard() {
     totalStudyTime,
     completionRate,
     onboardingCompleted,
+    isAuthenticated,
+    user,
   } = useApp();
 
   useEffect(() => {
-    if (!onboardingCompleted) {
+    if (!isAuthenticated) {
       navigate('/onboarding');
+    } else if (!onboardingCompleted) {
+      navigate('/onboarding/profile');
     }
-  }, [onboardingCompleted, navigate]);
+  }, [isAuthenticated, onboardingCompleted, navigate]);
 
   const todayTasks = tasks.filter((task) => {
     const today = new Date();
@@ -76,7 +80,7 @@ export function Dashboard() {
       <header className="flex items-center justify-between">
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-foreground">
-            Good morning, Alex
+            Good morning, {user?.name?.split(' ')[0] || 'there'}
           </h1>
           <p className="text-muted-foreground italic text-sm mt-1">
             "Consistency is more important than intensity."

@@ -94,7 +94,7 @@ export function Tasks() {
       addTask({
         id: Date.now().toString(),
         ...newTask,
-        dueDate: new Date(newTask.dueDate),
+        dueDate: new Date(newTask.dueDate).toISOString(),
         status: 'pending',
         progress: 0,
         subtasks: [],

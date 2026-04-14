@@ -14,24 +14,48 @@ import {
 import { TrendingUp, Flame, Calendar, AlertTriangle } from 'lucide-react';
 
 export function Analytics() {
-  const { modules, studyStreak, completionRate } = useApp();
+  const { modules, studyStreak, completionRate, focusSessions, studySettings } = useApp();
 
-  const weeklyData = [
-    { day: 'M', hours: 1.5 },
-    { day: 'T', hours: 2.8 },
-    { day: 'W', hours: 4.2 },
-    { day: 'T', hours: 3.1 },
-    { day: 'F', hours: 2.5 },
-    { day: 'S', hours: 3.8 },
-    { day: 'S', hours: 2.1 },
-  ];
+  // Build weekly bar chart from real focus sessions (last 7 days)
+  const weeklyData = (() => {
+    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    const result = days.map((day) => ({ day, hours: 0 }));
+    const now = new Date();
+    focusSessions
+      .filter((s) => s.completedAt)
+      .forEach((s) => {
+        const d = new Date(s.startTime);
+        const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000);
+        if (diffDays < 7) {
+          const idx = d.getDay();
+          result[idx].hours = Math.round((result[idx].hours + s.duration / 3600) * 10) / 10;
+        }
+      });
+    return result;
+  })();
 
-  const monthlyData = [
-    { week: 'Week 1', hours: 12 },
-    { week: 'Week 2', hours: 18 },
-    { week: 'Week 3', hours: 22 },
-    { week: 'Week 4', hours: 30 },
-  ];
+  // Build monthly line chart (last 4 weeks)
+  const monthlyData = (() => {
+    const weeks = [{ week: 'Week 1', hours: 0 }, { week: 'Week 2', hours: 0 }, { week: 'Week 3', hours: 0 }, { week: 'Week 4', hours: 0 }];
+    const now = new Date();
+    focusSessions
+      .filter((s) => s.completedAt)
+      .forEach((s) => {
+        const d = new Date(s.startTime);
+        const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000);
+        if (diffDays < 28) {
+          const weekIdx = Math.min(3, Math.floor(diffDays / 7));
+          weeks[3 - weekIdx].hours = Math.round((weeks[3 - weekIdx].hours + s.duration / 3600) * 10) / 10;
+        }
+      });
+    return weeks;
+  })();
+
+  const totalMonthHours = weeklyData.reduce((a, b) => a + b.hours, 0);
+  const dailyAvg = weeklyData.filter((d) => d.hours > 0).length
+    ? Math.round((totalMonthHours / weeklyData.filter((d) => d.hours > 0).length) * 10) / 10
+    : 0;
+  const bestDay = [...weeklyData].sort((a, b) => b.hours - a.hours)[0];
 
   const calendarData = [
     [1, 1, 1, 1, 1, 1, 1],
@@ -108,9 +132,9 @@ export function Analytics() {
           </ResponsiveContainer>
         </div>
         <div className="space-y-1 text-sm text-muted-foreground">
-          <p>Total: 82 hours this month • +15% from last month</p>
-          <p>Daily average: 2.7 hours</p>
-          <p>Most productive: Wednesdays (4.2 hours avg)</p>
+          <p>Total: {totalMonthHours.toFixed(1)} hours this month</p>
+          <p>Daily average: {dailyAvg} hours</p>
+          <p>Most productive: {bestDay.day}days ({bestDay.hours} hours avg)</p>
         </div>
       </div>
 

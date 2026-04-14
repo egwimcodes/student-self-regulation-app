@@ -4,14 +4,22 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
 
 export function SignUp() {
   const navigate = useNavigate();
+  const { login } = useApp();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (form.password.length < 8) {
+      setError('Password must be at least 8 characters.');
+      return;
+    }
+    login(form.email, form.name);
     navigate('/onboarding/profile');
   };
 
@@ -32,7 +40,7 @@ export function SignUp() {
                 type="text"
                 placeholder="Alex Chen"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e) => { setForm({ ...form, name: e.target.value }); setError(''); }}
                 className="bg-white/15 border-white/20 text-white placeholder:text-white/50 focus-visible:border-white/60 focus-visible:ring-white/20"
                 required
               />
@@ -44,7 +52,7 @@ export function SignUp() {
                 type="email"
                 placeholder="you@university.edu"
                 value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                onChange={(e) => { setForm({ ...form, email: e.target.value }); setError(''); }}
                 className="bg-white/15 border-white/20 text-white placeholder:text-white/50 focus-visible:border-white/60 focus-visible:ring-white/20"
                 required
               />
@@ -57,7 +65,7 @@ export function SignUp() {
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) => { setForm({ ...form, password: e.target.value }); setError(''); }}
                   className="bg-white/15 border-white/20 text-white placeholder:text-white/50 focus-visible:border-white/60 focus-visible:ring-white/20 pr-10"
                   required
                   minLength={8}
@@ -73,11 +81,9 @@ export function SignUp() {
               <p className="text-white/50 text-xs">Minimum 8 characters</p>
             </div>
 
-            <Button
-              type="submit"
-              size="lg"
-              className="w-full h-12 bg-white text-[#1E3E5F] hover:bg-white/90 font-semibold mt-2"
-            >
+            {error && <p className="text-red-300 text-sm">{error}</p>}
+
+            <Button type="submit" size="lg" className="w-full h-12 bg-white text-[#1E3E5F] hover:bg-white/90 font-semibold mt-2">
               Create Account
             </Button>
           </form>
@@ -85,10 +91,7 @@ export function SignUp() {
 
         <p className="text-center text-white/80 text-sm">
           Already have an account?{' '}
-          <button
-            className="text-white font-semibold hover:underline"
-            onClick={() => navigate('/auth/signin')}
-          >
+          <button className="text-white font-semibold hover:underline" onClick={() => navigate('/auth/signin')}>
             Sign In
           </button>
         </p>

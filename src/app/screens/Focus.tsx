@@ -14,13 +14,13 @@ import { Checkbox } from "../components/ui/checkbox";
 import { Timer, Pause, Play, Square, Plus, Music, Wind } from "lucide-react";
 
 export function Focus() {
-  const { tasks, modules, addFocusSession, completeFocusSession, addXP } =
+  const { tasks, modules, addFocusSession, completeFocusSession, addXP, studySettings } =
     useApp();
   const [selectedTaskId, setSelectedTaskId] = useState("");
   const [sessionType, setSessionType] = useState<"deep" | "pomodoro" | "study">(
     "pomodoro",
   );
-  const [duration, setDuration] = useState(25);
+  const [duration, setDuration] = useState(studySettings.pomodoroDuration);
   const [environment, setEnvironment] = useState<string[]>([]);
   const [blockNotifications, setBlockNotifications] = useState(true);
   const [blockSocial, setBlockSocial] = useState(true);

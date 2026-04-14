@@ -16,7 +16,7 @@ interface ModuleInput {
 
 export function ProfileSetup() {
   const navigate = useNavigate();
-  const { setUser, addModule } = useApp();
+  const { setUser, addModule, user } = useApp();
   const [academicLevel, setAcademicLevel] = useState<
     'undergraduate' | 'postgraduate' | 'phd' | null
   >(null);
@@ -72,11 +72,11 @@ export function ProfileSetup() {
       });
 
       setUser({
-        name: 'Alex Chen',
+        name: user?.name || 'Student',
         academicLevel,
-        year: 'Year 2',
-        field: 'Computer Science',
-        joinDate: new Date(),
+        year: 'Year 1',
+        field: 'General',
+        joinDate: new Date().toISOString(),
         primaryGoal,
       });
 
